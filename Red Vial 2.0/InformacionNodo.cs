@@ -2,6 +2,7 @@
 {
     public class InformacionNodo
     {
+        public int InformacionNodoID {  get; set; }
         public int CantidadVehiculos { get; set; }
         public string TipoViaNorte { get; set; }
         public string TipoViaSur { get; set; }
