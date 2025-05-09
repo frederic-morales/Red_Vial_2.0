@@ -29,5 +29,7 @@ CREATE TABLE NodoInterseccion (
     FOREIGN KEY (NodoOesteID) REFERENCES NodoInterseccion(NodoID)
 );
 
- --SELECT * FROM InformacionNodo
- --SELECT * FROM NodoInterseccion
+ SELECT * FROM InformacionNodo
+ SELECT * FROM NodoInterseccion
+
+
