@@ -1,4 +1,5 @@
-﻿@page "/"
+﻿@rendermode InteractiveServer
+@page "/"
 <link href="sidebar.css" rel="stylesheet" />
 
 <h1>RED VIAL</h1>
@@ -21,11 +22,17 @@
 </style>
 
 <div class="sidebar">
-    <button class="sidebar-btn">Agregar Carro</button>
-    <button class="sidebar-btn">Seleccionar Carro</button>
-    <button class="sidebar-btn">Circular vehiculos</button>
-    <button class="sidebar-btn">Eliminar carro</button>
-    <button class="sidebar-btn">Cambiar estado semaforo</button>
+    @* <button class="sidebar-btn" @onclick="MoverCarro" >Mover Carro</button> *@
+    <button class="sidebar-btn" @onclick="agregarCarro">Agregar Carro</button>
+    <input type="text" id="username" name="username" @bind="textoUsuario" placeholder="Enter your name" />
+    <button class="sidebar-btn" @onclick="MostrarTexto">Mover c</button>
+
+    @* BOTONES DE MOVIMIENTO *@
+    <button class="sidebar-btn" @onclick="MoverAlNorte">Mover al Norte</button>
+    <button class="sidebar-btn" @onclick="MoverAlSur">Mover al Sur</button>
+    <button class="sidebar-btn" @onclick="MoverAlOeste">Mover al Oeste</button>
+    <button class="sidebar-btn" @onclick="MoverAlEste">Mover al Este</button>
+
 </div>
 
 @code{
@@ -36,16 +43,132 @@
     {
         miCiudad.CrearNodoCentral(infoCentro);
     }
+
+    private int width = 375;
+    private int heigth = 220;
+
+    // private void MoverCarro()
+    // {
+    //     width += 10; // Ajusta estos valores según necesites
+    //     heigth += 10;
+    // }
+
+    private void agregarCarro(){
+        miCiudad.AgregarCarro(width, heigth);
+    }
+
+    private string textoUsuario = string.Empty; // Almacena lo que el usuario escribe
+    private int textoRenderizado = 0; // Almacena lo que se mostrará al hacer clic
+
+    private void MostrarTexto()
+    {
+        textoRenderizado = Convert.ToInt32(textoUsuario);
+    }
+
+    private void MoverAlNorte()
+    {
+        if (int.TryParse(textoUsuario, out int idCarro))
+        {
+            bool movido = miCiudad.MoverCarroAlNorte(idCarro, 100); // 10 es la cantidad de movimiento
+            if (!movido)
+            {
+                // Mostrar mensaje de error si el carro no se encontró
+                Console.WriteLine($"No se encontró el carro con ID {idCarro}");
+            }
+            StateHasChanged(); // Forzar actualización de la UI
+        }
+        else
+        {
+            Console.WriteLine("Por favor ingrese un ID válido");
+        }
+    }
+
+    private void MoverAlSur()
+    {
+        if (int.TryParse(textoUsuario, out int idCarro))
+        {
+            bool movido = miCiudad.MoverCarroAlSur(idCarro, 100);
+            if (!movido) Console.WriteLine($"No se encontró el carro con ID {idCarro}");
+            StateHasChanged();
+        }
+        else
+        {
+            Console.WriteLine("Por favor ingrese un ID válido");
+        }
+    }
+
+    private void MoverAlOeste()
+    {
+        if (int.TryParse(textoUsuario, out int idCarro))
+        {
+            bool movido = miCiudad.MoverCarroAlOeste(idCarro, 100);
+            if (!movido) Console.WriteLine($"No se encontró el carro con ID {idCarro}");
+            StateHasChanged();
+        }
+        else
+        {
+            Console.WriteLine("Por favor ingrese un ID válido");
+        }
+    }
+
+    private void MoverAlEste()
+    {
+        if (int.TryParse(textoUsuario, out int idCarro))
+        {
+            bool movido = miCiudad.MoverCarroAlEste(idCarro, 100);
+            if (!movido) Console.WriteLine($"No se encontró el carro con ID {idCarro}");
+            StateHasChanged();
+        }
+        else
+        {
+            Console.WriteLine("Por favor ingrese un ID válido");
+        }
+    }
+
+
 }
 
 <div class="container">    
     <h3>Calles</h3>
     <div class="calles">
-        <Calle showCarro=false interseccion=miCiudad.NodoCentral></Calle>
-        @* <Calle showCarro=true></Calle>
-        <Calle showCarro=true></Calle>
-        <Calle showCarro=false></Calle>
-        <Calle showCarro=true></Calle> *@
+        @* @textoRenderizado *@
+        @foreach(CarroInfo carro in @miCiudad.carrosTotales){
+            <div class="container-carro" style="left: @(carro.width)px; top: @(carro.height)px;">
+                <p>@carro.idCarro</p>
+                <img class="img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQeij2J2D4EGAL09LRODhPm5nJJcIg6-yR-Tw&s" />
+            </div>
+        }
+
+        <Calle 
+            interseccion=miCiudad.NodoCentral
+            Width="@width"
+               Height="@heigth">
+        </Calle>
+        <Calle 
+               interseccion=miCiudad.NodoCentral
+               Width="@width"
+               Height="@heigth">
+        </Calle>
+        <Calle
+               interseccion=miCiudad.NodoCentral
+               Width="@width"
+               Height="@heigth">
+        </Calle>
+        <Calle
+               interseccion=miCiudad.NodoCentral
+               Width="@width"
+               Height="@heigth">
+        </Calle>
+        <Calle
+               interseccion=miCiudad.NodoCentral
+               Width="@width"
+               Height="@heigth">
+        </Calle>
+        <Calle
+               interseccion=miCiudad.NodoCentral
+               Width="@width"
+               Height="@heigth">
+        </Calle>
     </div>
 </div>
 

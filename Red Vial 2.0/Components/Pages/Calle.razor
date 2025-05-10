@@ -1,13 +1,15 @@
-﻿@code {
-    [Parameter]
-    public bool showCarro { get; set; }
+﻿@rendermode InteractiveServer
+@code {
 
     [Parameter]
     public NodoInterseccion interseccion { get; set; }
 
-    
-}
+    [Parameter]
+    public int Width { get; set; } = 130; // Valor por defecto
 
+    [Parameter]
+    public int Height { get; set; } = 130; // Valor por defecto
+}
 
 <style>
         .interseccion {
@@ -45,8 +47,8 @@
        width:50px;
        height: auto;
        position: absolute;
-       top: 130px;
-       left: 130px;
+/*        top: 130px;
+       left: 130px; */
        z-index: 20;
     }
 
@@ -63,22 +65,17 @@
         z-index: 25;
     }
 
-
-
 </style>
 
 <div class="interseccion">
     <div class="carretera horizontal"></div>
-    @if(showCarro){
-        <div class="container-carro">
-            <img class="img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQeij2J2D4EGAL09LRODhPm5nJJcIg6-yR-Tw&s" />
-        </div>
-    }
     <div class="container-semaforo">
         <img class="img" src="https://static.vecteezy.com/system/resources/previews/008/852/920/non_2x/traffic-light-clip-art-free-png.png" />
     </div>
     <p class="">
         @interseccion.Info.Nombre
+        @Width
+        @Height
     </p>
     <div class="carretera vertical"></div>
 </div>
